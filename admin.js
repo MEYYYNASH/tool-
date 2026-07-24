@@ -201,7 +201,8 @@ const mockTerminalLogs = [
 // Append random logs to console logger every 6 seconds to give premium, enterprise server feel
 setInterval(() => {
   const adminConsole = document.getElementById('admin-console-logs');
-  if (adminConsole && document.getElementById('admin-logs').style.display !== 'none') {
+  const adminLogsSec = document.getElementById('admin-logs');
+  if (adminConsole && adminLogsSec && adminLogsSec.style.display !== 'none') {
     const randomLog = mockTerminalLogs[Math.floor(Math.random() * mockTerminalLogs.length)];
     const roll = Math.random();
     let type = "info";
