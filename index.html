@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ToolHub Pro — Premium Enterprise Online Tools Platform</title>
+  <meta name="description" content="Merge, split, and rotate PDFs, generate custom vector QR codes, convert images & documents, and download video links client-side. Fast, secure, and professional.">
+  
+  <!-- CSS Styles -->
+  <link rel="stylesheet" href="styles.css">
+  
+  <!-- Icon Libraries (FontAwesome) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Client-Side Libraries from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+</head>
+<body>
+
+  <!-- Background Glow Spheres -->
+  <div class="glow-sphere-1"></div>
+  <div class="glow-sphere-2"></div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Main Navigation Header -->
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="logo" id="nav-logo">
+        <div class="logo-icon">T</div>
+        <span>ToolHub<span class="text-gradient" style="font-weight: 700;">Pro</span></span>
+      </a>
+      
+      <button class="menu-toggle" id="menu-toggle">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#features" class="anchor-link">Features</a></li>
+        <li><a href="#pricing" class="anchor-link">Pricing</a></li>
+        <li><a href="dashboard.html#documentation">Docs</a></li>
+        <li><a href="dashboard.html#admin-panel" class="auth-required admin-only">Admin</a></li>
+        <li><a href="dashboard.html" class="auth-required">Dashboard</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" class="btn-secondary" style="padding: 0; border-radius: 50%; width: 34px; height: 34px; justify-content: center; align-items: center; border: 1px solid var(--glass-border);">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+
+        <!-- Dynamic Auth Buttons -->
+        <div id="auth-buttons-container">
+          <a href="#login" class="btn-secondary" style="padding: 6px 14px; font-size: 12px; border-radius: var(--radius-md);">Login</a>
+          <a href="#register" class="btn-primary" style="padding: 6px 14px; font-size: 12px; border-radius: var(--radius-md); box-shadow: none;">Sign Up</a>
+        </div>
+        <div id="user-profile-container" style="display: none; align-items: center; gap: 12px;">
+          <div class="avatar" id="user-avatar">JD</div>
+          <button id="logout-btn" class="btn-secondary" style="padding: 6px 10px; font-size: 11px; border-radius: var(--radius-md);">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Menu Drawer -->
+  <div id="mobile-menu-drawer" class="mobile-menu-drawer">
+    <div class="mobile-menu-section">
+      <div class="mobile-menu-title">Main Navigation</div>
+      <div class="mobile-menu-links">
+        <a href="#features" class="mobile-menu-link"><i class="fa-solid fa-star"></i> Features</a>
+        <a href="#pricing" class="mobile-menu-link"><i class="fa-solid fa-tag"></i> Pricing</a>
+        <a href="dashboard.html#documentation" class="mobile-menu-link"><i class="fa-solid fa-book"></i> API Docs</a>
+        <a href="dashboard.html#dashboard" class="mobile-menu-link auth-required"><i class="fa-solid fa-gauge"></i> Workspace Dashboard</a>
+        <a href="#login" class="mobile-menu-link"><i class="fa-solid fa-right-to-bracket"></i> Sign In</a>
+        <a href="#register" class="mobile-menu-link"><i class="fa-solid fa-user-plus"></i> Create Account</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- 1. LANDING PAGE SHELL -->
+  <!-- ============================================== -->
+  <main id="landing" class="page-shell active">
+    <section class="hero-section">
+      <div class="hero-tag">
+        <i class="fa-solid fa-shield-halved" style="margin-right: 6px; color: var(--accent-primary);"></i> Professional Workspace Platform
+      </div>
+      <h1 class="hero-title">
+        Unified Online Tools.<br>
+        <span class="text-gradient">Designed for Professional Work.</span>
+      </h1>
+      <p class="hero-subtitle">
+        Secure and high-performance client-side editors. Merge PDFs, configure vector QR codes, convert image raster layers, and parse media streams entirely in your browser.
+      </p>
+      <div class="hero-buttons">
+        <a href="#register" class="btn-primary">
+          Get Started Free <i class="fa-solid fa-arrow-right"></i>
+        </a>
+        <a href="#dashboard" class="btn-secondary">
+          Explore Tools <i class="fa-solid fa-cubes"></i>
+        </a>
+      </div>
+
+      <!-- Landing Interactive Dashboard Mockup -->
+      <div class="hero-preview glass-panel double-border" style="padding: 24px;">
+        <div style="display: flex; gap: 6px; border-bottom: 1px solid var(--glass-border); padding-bottom: 12px; margin-bottom: 20px; align-items: center;">
+          <div style="width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.12);"></div>
+          <div style="width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.12);"></div>
+          <div style="width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.12);"></div>
+          <span style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); margin-left: 12px;">workspace.toolhub.pro/dashboard</span>
+        </div>
+        <div class="tools-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+          <div class="glass-panel" style="padding: 20px; border-radius: var(--radius-lg); text-align: left; border-color: rgba(99, 102, 241, 0.15);">
+            <i class="fa-solid fa-file-pdf" style="color: var(--accent-secondary); font-size: 20px; margin-bottom: 12px;"></i>
+            <h4 style="font-size: 13px; margin-bottom: 4px; font-weight: 600;">PDF Tools Suite</h4>
+            <p style="font-size: 11px; color: var(--text-secondary); line-height: 1.5;">Merge pages, split files, add watermarks and visual page rotations.</p>
+          </div>
+          <div class="glass-panel" style="padding: 20px; border-radius: var(--radius-lg); text-align: left; border-color: rgba(59, 130, 246, 0.15);">
+            <i class="fa-solid fa-qrcode" style="color: var(--accent-primary); font-size: 20px; margin-bottom: 12px;"></i>
+            <h4 style="font-size: 13px; margin-bottom: 4px; font-weight: 600;">Custom QR Builder</h4>
+            <p style="font-size: 11px; color: var(--text-secondary); line-height: 1.5;">Create professional vector codes with custom styles, logos, and charts.</p>
+          </div>
+          <div class="glass-panel" style="padding: 20px; border-radius: var(--radius-lg); text-align: left; border-color: rgba(16, 185, 129, 0.15);">
+            <i class="fa-solid fa-arrow-rotate-left" style="color: var(--accent-tertiary); font-size: 20px; margin-bottom: 12px;"></i>
+            <h4 style="font-size: 13px; margin-bottom: 4px; font-weight: 600;">Universal Converter</h4>
+            <p style="font-size: 11px; color: var(--text-secondary); line-height: 1.5;">Convert image formats, generate documents, and queue media processes.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Overview -->
+    <section class="section" id="features" style="padding: 60px 0;">
+      <div class="section-header">
+        <h2>Enterprise-Grade Operations</h2>
+        <p>Everything you need to handle document tasks, tracking campaigns, and layout conversions securely inside a unified workspace.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card glass-panel">
+          <div class="feature-icon cyan"><i class="fa-solid fa-shield-halved"></i></div>
+          <h3 class="feature-title">Security-First</h3>
+          <p class="feature-desc">Privacy guaranteed. PDF files and conversions execute client-side inside the browser sandbox; your documents never leave your computer.</p>
+        </div>
+        <div class="feature-card glass-panel">
+          <div class="feature-icon pink"><i class="fa-solid fa-chart-line"></i></div>
+          <h3 class="feature-title">Scan Analytics</h3>
+          <p class="feature-desc">Dynamic tracker mapping scan locations, device types, browser clients, and time frequencies onto detailed dashboards.</p>
+        </div>
+        <div class="feature-card glass-panel">
+          <div class="feature-icon purple"><i class="fa-solid fa-terminal"></i></div>
+          <h3 class="feature-title">Developer API</h3>
+          <p class="feature-desc">Programmatic REST API keys to run file transformations, watermark processes, and custom QR generation directly in your apps.</p>
+        </div>
+        <div class="feature-card glass-panel">
+          <div class="feature-icon cyan"><i class="fa-solid fa-layer-group"></i></div>
+          <h3 class="feature-title">Batch Queue</h3>
+          <p class="feature-desc">Upload multiple assets simultaneously, queue operations client-side, track progress bars, and grab a compiled ZIP folder.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="section" id="pricing" style="padding: 60px 0; border-top: 1px solid var(--glass-border); background: var(--bg-secondary);">
+      <div class="section-header">
+        <h2>Simple, Flexible Pricing</h2>
+        <p>Find the plan that matches your workflow. Try features and upgrade to scale up your usage limits.</p>
+      </div>
+
+      <div class="features-grid" style="max-width: 1000px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+        <!-- Free Plan -->
+        <div class="glass-panel" style="padding: 24px; display: flex; flex-direction: column; justify-content: space-between; border-radius: var(--radius-lg);">
+          <div>
+            <h3 style="font-size: 16px; margin-bottom: 4px; font-weight: 700;">Starter</h3>
+            <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 16px;">Perfect for simple occasional operations.</p>
+            <div style="font-size: 28px; font-weight: 700; margin-bottom: 20px;">$0 <span style="font-size: 12px; color: var(--text-muted); font-weight: 500;">/ month</span></div>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 12px; color: var(--text-secondary); margin-bottom: 24px;">
+              <li><i class="fa-solid fa-check" style="color: var(--accent-primary); margin-right: 8px;"></i> 5 daily tool operations</li>
+              <li><i class="fa-solid fa-check" style="color: var(--accent-primary); margin-right: 8px;"></i> Standard static QR Codes</li>
+              <li><i class="fa-solid fa-check" style="color: var(--accent-primary); margin-right: 8px;"></i> Single-file converters</li>
+              <li style="color: var(--text-muted);"><i class="fa-solid fa-xmark" style="margin-right: 10px;"></i> No scan analytics dashboard</li>
+              <li style="color: var(--text-muted);"><i class="fa-solid fa-xmark" style="margin-right: 10px;"></i> Rest API keys</li>
+            </ul>
+          </div>
+          <a href="#register" class="btn-secondary" style="text-align: center; justify-content: center; border-radius: var(--radius-md);">Start Free</a>
+        </div>
+
+        <!-- Pro Plan -->
+        <div class="glass-panel double-border" style="padding: 24px; display: flex; flex-direction: column; justify-content: space-between; border-radius: var(--radius-lg); border-color: rgba(99,102,241,0.25); box-shadow: 0 4px 20px rgba(99, 102, 241, 0.08);">
+          <div style="position: absolute; top: -10px; right: 20px; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); color: #fff; font-size: 9px; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 100px; letter-spacing: 0.05em;">Most Popular</div>
+          <div>
+            <h3 style="font-size: 16px; margin-bottom: 4px; font-weight: 700;">Pro</h3>
+            <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 16px;">For professionals and digital developers.</p>
+            <div style="font-size: 28px; font-weight: 700; margin-bottom: 20px;">$9 <span style="font-size: 12px; color: var(--text-muted); font-weight: 500;">/ month</span></div>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 12px; color: var(--text-secondary); margin-bottom: 24px;">
+              <li><i class="fa-solid fa-check" style="color: var(--accent-secondary); margin-right: 8px;"></i> Unlimited daily operations</li>
+              <li><i class="fa-solid fa-check" style="color: var(--accent-secondary); margin-right: 8px;"></i> High-speed batch processing</li>
+              <li><i class="fa-solid fa-check" style="color: var(--accent-secondary); margin-right: 8px;"></i> Dynamic QR Codes + Live Analytics</li>
+              <li><i class="fa-solid fa-check" style="color: var(--accent-secondary); margin-right: 8px;"></i> Rest API access (10k req/mo)</li>
+              <li><i class="fa-solid fa-check" style="color: var(--accent-secondary); margin-right: 8px;"></i> 10GB Cloud workspace storage</li>
+            </ul>
+          </div>
+          <button class="btn-primary upgrade-pro-trigger" style="text-align: center; justify-content: center; border-radius: var(--radius-md); box-shadow: none;">Upgrade to Pro</button>
+        </div>
+
+        <!-- Enterprise -->
+        <div class="glass-panel" style="padding: 24px; display: flex; flex-direction: column; justify-content: space-between; border-radius: var(--radius-lg);">
+          <div>
+            <h3 style="font-size: 16px; margin-bottom: 4px; font-weight: 700;">Enterprise</h3>
+            <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 16px;">For organizations needing scale and support.</p>
+            <div style="font-size: 28px; font-weight: 700; margin-bottom: 20px;">Custom</div>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 12px; color: var(--text-secondary); margin-bottom: 24px;">
+              <li><i class="fa-solid fa-check" style="color: var(--accent-primary); margin-right: 8px;"></i> Unlimited team workspace seats</li>
+              <li><i class="fa-solid fa-check" style="color: var(--accent-primary); margin-right: 8px;"></i> Dedicated processing instances</li>
+              <li><i class="fa-solid fa-check" style="color: var(--accent-primary); margin-right: 8px;"></i> Custom API rate limits + logs</li>
+              <li><i class="fa-solid fa-check" style="color: var(--accent-primary); margin-right: 8px;"></i> 99.9% Uptime SLA guarantee</li>
+            </ul>
+          </div>
+          <a href="#contact" class="btn-secondary" style="text-align: center; justify-content: center; border-radius: var(--radius-md);">Contact Sales</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQs Page -->
+    <section class="section" id="faq" style="padding: 60px 0; border-top: 1px solid var(--glass-border);">
+      <div class="section-header">
+        <h2>Frequently Asked Questions</h2>
+        <p>Answers to common questions about file security, QR customizations, and developer tools.</p>
+      </div>
+      <div style="max-width: 650px; margin: 0 auto; padding: 0 20px; display: flex; flex-direction: column; gap: 12px;">
+        <div class="glass-panel" style="padding: 16px; border-radius: var(--radius-md);">
+          <h4 style="font-size: 13px; margin-bottom: 6px; font-weight: 600;"><i class="fa-solid fa-circle-question" style="color: var(--accent-primary); margin-right: 8px;"></i> Are my uploaded files secure?</h4>
+          <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.5;">Yes. Because ToolHub Pro executes basic actions (PDF Merging, Splitting, Rotating, and image transformations) locally inside your browser, the documents never leave your computer. For conversions that require remote helpers, files are processed in-memory and destroyed immediately after download.</p>
+        </div>
+        <div class="glass-panel" style="padding: 16px; border-radius: var(--radius-md);">
+          <h4 style="font-size: 13px; margin-bottom: 6px; font-weight: 600;"><i class="fa-solid fa-circle-question" style="color: var(--accent-primary); margin-right: 8px;"></i> How do Dynamic QR Codes work?</h4>
+          <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.5;">Dynamic QR Codes direct scanning users to our redirect portal, which counts the analytics parameters (device, referrer, geo-location, user-agent) before sending them to your actual configured link. This lets you edit the destination link at any time without changing the QR code graphics!</p>
+        </div>
+        <div class="glass-panel" style="padding: 16px; border-radius: var(--radius-md);">
+          <h4 style="font-size: 13px; margin-bottom: 6px; font-weight: 600;"><i class="fa-solid fa-circle-question" style="color: var(--accent-primary); margin-right: 8px;"></i> Can I automate these operations using an API?</h4>
+          <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.5;">Yes, Pro members can generate a secret API key via settings. You can review and test the Swagger/REST endpoints under our documentation tab to merge documents or render QR graphics programmatically.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Page -->
+    <section class="section" id="contact" style="padding: 60px 0; border-top: 1px solid var(--glass-border); background: var(--bg-secondary);">
+      <div class="section-header">
+        <h2>Get in Touch</h2>
+        <p>Need support or custom white-label solutions? Send us a ticket and our team will get back to you shortly.</p>
+      </div>
+      <div style="max-width: 450px; margin: 0 auto; padding: 0 20px;">
+        <form class="glass-panel" style="padding: 24px; border-radius: var(--radius-lg); display: flex; flex-direction: column; gap: 12px;" id="contact-form">
+          <div>
+            <label for="contact-name">Name</label>
+            <input type="text" id="contact-name" placeholder="John Doe" required>
+          </div>
+          <div>
+            <label for="contact-email">Email</label>
+            <input type="email" id="contact-email" placeholder="john@example.com" required>
+          </div>
+          <div>
+            <label for="contact-message">Message</label>
+            <textarea id="contact-message" rows="3" placeholder="How can we help you?" required></textarea>
+          </div>
+          <button type="submit" class="btn-primary" style="justify-content: center; border-radius: var(--radius-md);">Send Message <i class="fa-solid fa-paper-plane"></i></button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================================== -->
+  <!-- 2. LOGIN / SIGNUP SHELLS -->
+  <!-- ============================================== -->
+  <main id="login" class="page-shell">
+    <div style="max-width: 380px; margin: 80px auto; padding: 0 24px;">
+      <div class="glass-panel double-border" style="padding: 30px; border-radius: var(--radius-lg); text-align: center;">
+        <h2 style="font-size: 20px; margin-bottom: 6px;">Welcome Back</h2>
+        <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 16px;">Sign in to your ToolHub Pro dashboard</p>
+        
+        <div style="padding: 10px; border-radius: var(--radius-sm); border: 1px solid rgba(239, 68, 68, 0.2); background: rgba(239, 68, 68, 0.05); color: #ef4444; font-size: 11px; margin-bottom: 16px; font-weight: 500; display: flex; align-items: center; gap: 8px; text-align: left;">
+          <i class="fa-solid fa-circle-exclamation" style="flex-shrink: 0;"></i>
+          <span>Standard email login is disabled during Beta. Please use Sandbox Login below.</span>
+        </div>
+
+        <form id="login-form" style="display: flex; flex-direction: column; gap: 12px; text-align: left; margin-bottom: 20px; opacity: 0.6;">
+          <div>
+            <label for="login-email" style="color: var(--text-muted);">Email Address</label>
+            <input type="email" id="login-email" placeholder="you@example.com" disabled>
+          </div>
+          <div>
+            <label for="login-pass" style="color: var(--text-muted);">Password</label>
+            <input type="password" id="login-pass" placeholder="••••••••" disabled>
+          </div>
+          <button type="submit" class="btn-primary" style="justify-content: center; font-size: 13px; padding: 10px; cursor: not-allowed;" disabled>Sign In <i class="fa-solid fa-right-to-bracket"></i></button>
+        </form>
+
+        <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 16px; color: var(--text-muted); font-size: 11px;">
+          <span style="height: 1px; background: var(--glass-border); flex-grow: 1;"></span>
+          <span>OR SIGN IN WITH</span>
+          <span style="height: 1px; background: var(--glass-border); flex-grow: 1;"></span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+          <button type="button" class="btn-secondary oauth-btn" data-provider="Google" style="justify-content: center; font-size: 12px; padding: 8px 12px;"><i class="fa-brands fa-google" style="color: #ea4335;"></i> Google</button>
+          <button type="button" class="btn-secondary oauth-btn" data-provider="GitHub" style="justify-content: center; font-size: 12px; padding: 8px 12px;"><i class="fa-brands fa-github"></i> GitHub</button>
+        </div>
+
+        <button type="button" class="beta-login-btn btn-primary" style="justify-content: center; font-size: 12px; padding: 10px; width: 100%; margin-bottom: 16px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); border: none; box-shadow: 0 2px 10px rgba(16, 185, 129, 0.2);"><i class="fa-solid fa-flask"></i> Sandbox Beta Login (OAuth Google)</button>
+
+        <p style="font-size: 12px; color: var(--text-secondary);">Don't have an account? <a href="#register" style="color: var(--accent-primary); text-decoration: none; font-weight: 600;">Sign up</a></p>
+      </div>
+    </div>
+  </main>
+
+  <main id="register" class="page-shell">
+    <div style="max-width: 380px; margin: 60px auto; padding: 0 24px;">
+      <div class="glass-panel double-border" style="padding: 30px; border-radius: var(--radius-lg); text-align: center;">
+        <h2 style="font-size: 20px; margin-bottom: 6px;">Create Account</h2>
+        <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 16px;">Unlock batch conversions and QR tracking metrics</p>
+        
+        <div style="padding: 10px; border-radius: var(--radius-sm); border: 1px solid rgba(239, 68, 68, 0.2); background: rgba(239, 68, 68, 0.05); color: #ef4444; font-size: 11px; margin-bottom: 16px; font-weight: 500; display: flex; align-items: center; gap: 8px; text-align: left;">
+          <i class="fa-solid fa-circle-exclamation" style="flex-shrink: 0;"></i>
+          <span>Standard email registration is disabled during Beta. Please use Sandbox Login below.</span>
+        </div>
+
+        <form id="register-form" style="display: flex; flex-direction: column; gap: 12px; text-align: left; margin-bottom: 20px; opacity: 0.6;">
+          <div>
+            <label for="register-name" style="color: var(--text-muted);">Full Name</label>
+            <input type="text" id="register-name" placeholder="John Doe" disabled>
+          </div>
+          <div>
+            <label for="register-email" style="color: var(--text-muted);">Email Address</label>
+            <input type="email" id="register-email" placeholder="john@example.com" disabled>
+          </div>
+          <div>
+            <label for="register-pass" style="color: var(--text-muted);">Password</label>
+            <input type="password" id="register-pass" placeholder="••••••••" disabled>
+          </div>
+          <button type="submit" class="btn-primary" style="justify-content: center; font-size: 13px; padding: 10px; cursor: not-allowed;" disabled>Create Free Account <i class="fa-solid fa-user-plus"></i></button>
+        </form>
+
+        <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 16px; color: var(--text-muted); font-size: 11px;">
+          <span style="height: 1px; background: var(--glass-border); flex-grow: 1;"></span>
+          <span>OR SIGN UP WITH</span>
+          <span style="height: 1px; background: var(--glass-border); flex-grow: 1;"></span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+          <button type="button" class="btn-secondary oauth-btn" data-provider="Google" style="justify-content: center; font-size: 12px; padding: 8px 12px;"><i class="fa-brands fa-google" style="color: #ea4335;"></i> Google</button>
+          <button type="button" class="btn-secondary oauth-btn" data-provider="GitHub" style="justify-content: center; font-size: 12px; padding: 8px 12px;"><i class="fa-brands fa-github"></i> GitHub</button>
+        </div>
+
+        <button type="button" class="beta-login-btn btn-primary" style="justify-content: center; font-size: 12px; padding: 10px; width: 100%; margin-bottom: 16px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); border: none; box-shadow: 0 2px 10px rgba(16, 185, 129, 0.2);"><i class="fa-solid fa-flask"></i> Sandbox Beta Login (OAuth Google)</button>
+
+        <p style="font-size: 12px; color: var(--text-secondary);">Already have an account? <a href="#login" style="color: var(--accent-primary); text-decoration: none; font-weight: 600;">Log in</a></p>
+      </div>
+    </div>
+  </main>
+
+
+  <!-- ============================================== -->
+  <!-- FOOTER -->
+  <!-- ============================================== -->
+  <footer style="border-top: 1px solid var(--glass-border); background: var(--bg-secondary); padding: 30px 20px; margin-top: 60px;">
+    <div style="max-width: 1140px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px;">
+      <div style="max-width: 250px;">
+        <div class="logo" style="margin-bottom: 12px;">
+          <div class="logo-icon">T</div>
+          <span>ToolHub<span class="text-gradient" style="font-weight: 700;">Pro</span></span>
+        </div>
+        <p style="font-size: 11px; color: var(--text-secondary); line-height: 1.6;">
+          Unified professional SaaS platform for browser-side PDF conversions, dynamic vector QR codes, and asynchronous worker queues.
+        </p>
+      </div>
+
+      <div style="display: flex; gap: 48px;">
+        <div>
+          <h4 style="font-size: 11px; text-transform: uppercase; margin-bottom: 12px; color: var(--text-primary); font-weight: 600;">Tools</h4>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 12px;">
+            <li><a href="dashboard.html" style="color: var(--text-secondary); text-decoration: none;">Merge PDF</a></li>
+            <li><a href="dashboard.html" style="color: var(--text-secondary); text-decoration: none;">QR Generator</a></li>
+            <li><a href="dashboard.html" style="color: var(--text-secondary); text-decoration: none;">Image Converter</a></li>
+            <li><a href="dashboard.html" style="color: var(--text-secondary); text-decoration: none;">Video Downloader</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="font-size: 11px; text-transform: uppercase; margin-bottom: 12px; color: var(--text-primary); font-weight: 600;">Company</h4>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 12px;">
+            <li><a href="#faq" style="color: var(--text-secondary); text-decoration: none;">FAQ Help</a></li>
+            <li><a href="#pricing" style="color: var(--text-secondary); text-decoration: none;">Pricing</a></li>
+            <li><a href="#contact" style="color: var(--text-secondary); text-decoration: none;">Contact Tickets</a></li>
+            <li><a href="dashboard.html#admin-panel" style="color: var(--text-secondary); text-decoration: none;">System Status</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div style="max-width: 1140px; margin: 30px auto 0 auto; border-top: 1px solid var(--glass-border); padding-top: 16px; display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted);">
+      <span>&copy; 2026 ToolHub Pro. Built on HTML5 / Client-Side APIs.</span>
+      <div style="display: flex; gap: 12px;">
+        <a href="#" style="color: var(--text-muted); text-decoration: none;">Privacy Policy</a>
+        <a href="#" style="color: var(--text-muted); text-decoration: none;">Terms of Service</a>
+      </div>
+    </div>
+  <!-- Floating Mobile Bottom Navigation Bar (Pill Expansion Design) -->
+  <nav class="mobile-bottom-bar" id="mobile-bottom-nav">
+    <a href="#landing" class="mobile-bottom-item active">
+      <i class="fa-solid fa-house"></i>
+      <span class="nav-label">Home</span>
+    </a>
+    <a href="#features" class="mobile-bottom-item">
+      <i class="fa-solid fa-star"></i>
+      <span class="nav-label">Features</span>
+    </a>
+    <a href="#pricing" class="mobile-bottom-item">
+      <i class="fa-solid fa-tag"></i>
+      <span class="nav-label">Pricing</span>
+    </a>
+    <a href="dashboard.html#dashboard?tab=saas-settings" class="mobile-bottom-item">
+      <i class="fa-solid fa-user"></i>
+      <span class="nav-label">Profile</span>
+    </a>
+  </nav>
+
+  <!-- Project Scripts -->
+  <script src="app.js"></script>
+</body>
+</html>
